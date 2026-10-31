@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <main id="main" class="min-h-screen">
+    <section class="container mx-auto px-6 py-24">
+      <h1 class="text-4xl font-bold tracking-tight">Asiimwe Ronald</h1>
+      <p class="mt-4 text-lg text-[var(--color-muted)]">
+        Engineering Software. Advancing Intelligence.
+      </p>
+      <p class="mt-2 text-[var(--color-muted)]">
+        Portfolio scaffold — Phase 1. Content and sections will be added in subsequent phases.
+      </p>
+      <button
+        type="button"
+        class="mt-6 rounded-md border border-[var(--color-border)] px-4 py-2 text-sm hover:bg-[var(--color-bg-elevated)]"
+        onclick="window.toggleTheme()"
+      >
+        Toggle theme
+      </button>
+    </section>
+  </main>
+</BaseLayout>
