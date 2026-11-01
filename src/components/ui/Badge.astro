@@ -1,0 +1,29 @@
+---
+interface Props {
+  variant?: 'default' | 'accent' | 'muted' | 'outline';
+  class?: string;
+  [key: string]: any;
+}
+
+const { variant = 'default', class: className = '', ...rest } = Astro.props;
+
+const variants: Record<string, string> = {
+  default: 'bg-[var(--color-surface)] text-[var(--color-fg-muted)] border border-[var(--color-border)]',
+  accent: 'bg-[var(--color-accent-soft)] text-[var(--color-accent)] border border-transparent',
+  muted: 'bg-[var(--color-bg-subtle)] text-[var(--color-fg-subtle)] border border-transparent',
+  outline: 'bg-transparent text-[var(--color-fg-muted)] border border-[var(--color-border-strong)]',
+};
+---
+
+<span
+  class={[
+    'inline-flex items-center gap-1 rounded-[var(--radius-full)] px-2.5 py-0.5 text-xs font-medium',
+    variants[variant],
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')}
+  {...rest}
+>
+  <slot />
+</span>

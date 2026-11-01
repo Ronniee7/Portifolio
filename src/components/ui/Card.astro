@@ -1,0 +1,31 @@
+---
+interface Props {
+  variant?: 'default' | 'elevated';
+  class?: string;
+  href?: string;
+  [key: string]: any;
+}
+
+const { variant = 'default', class: className = '', href, ...rest } = Astro.props;
+
+const base =
+  'rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors duration-200';
+const variants: Record<string, string> = {
+  default: '',
+  elevated: 'shadow-[var(--shadow-md)]',
+};
+
+const classes = [base, variants[variant], className].filter(Boolean).join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <div class={classes} {...rest}>
+      <slot />
+    </div>
+  )
+}

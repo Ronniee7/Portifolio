@@ -1,0 +1,26 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  class?: string;
+  [key: string]: any;
+}
+
+const { size = 'xl', class: className = '', ...rest } = Astro.props;
+
+const widths: Record<string, string> = {
+  sm: 'max-w-[var(--container-sm)]',
+  md: 'max-w-[var(--container-md)]',
+  lg: 'max-w-[var(--container-lg)]',
+  xl: 'max-w-[var(--container-xl)]',
+  '2xl': 'max-w-[var(--container-2xl)]',
+  full: 'max-w-full',
+};
+
+const classes = ['mx-auto w-full px-5 sm:px-6 lg:px-8', widths[size] ?? widths.xl, className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div class={classes} {...rest}>
+  <slot />
+</div>

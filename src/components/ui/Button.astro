@@ -1,0 +1,52 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 font-medium transition-colors duration-200 focus-visible:outline-none disabled:opacity-50 disabled:pointer-events-none';
+
+const variants: Record<string, string> = {
+  primary:
+    'bg-[var(--color-accent)] text-[var(--color-accent-contrast)] hover:bg-[var(--color-accent-hover)]',
+  secondary:
+    'bg-[var(--color-surface)] text-[var(--color-fg)] border border-[var(--color-border)] hover:bg-[var(--color-surface-hover)]',
+  ghost: 'text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] hover:bg-[var(--color-surface)]',
+  outline:
+    'border border-[var(--color-border-strong)] text-[var(--color-fg)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'h-8 px-3 text-sm rounded-[var(--radius-md)]',
+  md: 'h-10 px-4 text-sm rounded-[var(--radius-md)]',
+  lg: 'h-12 px-6 text-base rounded-[var(--radius-lg)]',
+};
+
+const classes = [base, variants[variant], sizes[size], className].filter(Boolean).join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} {...rest}>
+      <slot />
+    </button>
+  )
+}

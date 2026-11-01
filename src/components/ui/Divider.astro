@@ -1,0 +1,18 @@
+---
+interface Props {
+  orientation?: 'horizontal' | 'vertical';
+  class?: string;
+}
+
+const { orientation = 'horizontal', class: className = '' } = Astro.props;
+---
+
+<hr
+  class={[
+    'border-0 border-[var(--color-border)]',
+    orientation === 'horizontal' ? 'h-px w-full' : 'w-px h-full',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')}
+/>
