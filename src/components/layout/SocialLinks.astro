@@ -1,0 +1,23 @@
+---
+import { socialLinks } from '../../data/social-links';
+import IconLink from './IconLink.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const iconMap: Record<string, 'github' | 'linkedin' | 'mail' | 'globe'> = {
+  github: 'github',
+  linkedin: 'linkedin',
+  mail: 'mail',
+  globe: 'globe',
+};
+---
+
+<div class={['flex items-center gap-2', className].filter(Boolean).join(' ')}>
+  {socialLinks.map((link) => (
+    <IconLink label={link.label} href={link.url} icon={iconMap[link.icon] ?? 'globe'} />
+  ))}
+</div>

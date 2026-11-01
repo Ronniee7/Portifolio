@@ -1,0 +1,74 @@
+---
+import { navigation } from '../../data/navigation';
+import SocialLinks from './SocialLinks.astro';
+import Button from '../ui/Button.astro';
+---
+
+<div id="mobile-menu" class="md:hidden fixed inset-0 z-50 hidden" aria-hidden="true">
+  <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/60"></div>
+  <div class="absolute right-0 top-0 h-full w-72 max-w-[85vw] bg-[var(--color-bg-elevated)] border-l border-[var(--color-border)] p-6 flex flex-col gap-6 shadow-[var(--shadow-lg)]">
+    <div class="flex items-center justify-between">
+      <span class="display text-lg font-bold text-[var(--color-fg)]">Menu</span>
+      <button
+        id="mobile-menu-close"
+        type="button"
+        class="inline-flex h-9 w-9 items-center justify-center rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]"
+        aria-label="Close navigation menu"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-1" aria-label="Mobile navigation">
+      {
+        navigation.map((item) => (
+          <a
+            href={item.href}
+            class="mobile-nav-link rounded-[var(--radius-md)] px-3 py-2.5 text-base font-medium text-[var(--color-fg-muted)] hover:text-[var(--color-fg)] hover:bg-[var(--color-surface)] transition-colors"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="mt-auto flex flex-col gap-4">
+      <SocialLinks />
+      <Button href="/cv/asiimwe-ronald-cv.pdf" variant="primary" size="md" class="w-full">
+        Download CV
+      </Button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const close = document.getElementById('mobile-menu-close');
+  const backdrop = document.getElementById('mobile-menu-backdrop');
+
+  function openMenu() {
+    if (!menu) return;
+    menu.classList.remove('hidden');
+    menu.setAttribute('aria-hidden', 'false');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    if (!menu) return;
+    menu.classList.add('hidden');
+    menu.setAttribute('aria-hidden', 'true');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+</script>

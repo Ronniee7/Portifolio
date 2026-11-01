@@ -1,24 +1,91 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
 ---
 
 <BaseLayout>
-  <main id="main" class="min-h-screen">
-    <section class="container mx-auto px-6 py-24">
-      <h1 class="text-4xl font-bold tracking-tight">Asiimwe Ronald</h1>
-      <p class="mt-4 text-lg text-[var(--color-muted)]">
-        Engineering Software. Advancing Intelligence.
-      </p>
-      <p class="mt-2 text-[var(--color-muted)]">
-        Portfolio scaffold — Phase 1. Content and sections will be added in subsequent phases.
-      </p>
-      <button
-        type="button"
-        class="mt-6 rounded-md border border-[var(--color-border)] px-4 py-2 text-sm hover:bg-[var(--color-bg-elevated)]"
-        onclick="window.toggleTheme()"
-      >
-        Toggle theme
-      </button>
+  <main id="main">
+    <section id="home" class="relative overflow-hidden">
+      <div class="container-x flex min-h-[88vh] flex-col justify-center py-20">
+        <Badge variant="accent" class="mb-6 w-fit">Available for research & engineering</Badge>
+        <h1 class="display text-5xl sm:text-6xl lg:text-7xl text-[var(--color-fg)] max-w-4xl">
+          Asiimwe Ronald
+        </h1>
+        <p class="mt-4 text-xl sm:text-2xl text-[var(--color-fg-muted)] max-w-3xl">
+          Engineering Software. Advancing Intelligence.
+        </p>
+        <p class="mt-6 max-w-2xl text-base sm:text-lg text-[var(--color-fg-muted)] leading-relaxed">
+          Software engineer and AI researcher focused on building reliable systems, intelligent
+          applications, and practical machine learning solutions.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href="/#projects" variant="primary" size="lg">Explore projects</Button>
+          <Button href="/cv/asiimwe-ronald-cv.pdf" variant="secondary" size="lg">Download CV</Button>
+        </div>
+        <dl class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl">
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-fg-subtle)]">Affiliation</dt>
+            <dd class="mt-1 text-sm text-[var(--color-fg)]">NUIST — MSc Artificial Intelligence</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-fg-subtle)]">Location</dt>
+            <dd class="mt-1 text-sm text-[var(--color-fg)]">Nanjing, China</dd>
+          </div>
+          <div>
+            <dt class="text-xs uppercase tracking-widest text-[var(--color-fg-subtle)]">Focus</dt>
+            <dd class="mt-1 text-sm text-[var(--color-fg)]">Reliable ML · Applied AI · Software</dd>
+          </div>
+        </dl>
+      </div>
     </section>
+
+    <Section id="about">
+      <Container>
+        <SectionHeading eyebrow="About" title="Software engineer, becoming an AI researcher." />
+        <p class="mt-6 max-w-3xl text-[var(--color-fg-muted)] leading-relaxed">
+          Phase 3 will populate this section with the full biography, engineering philosophy, and journey.
+        </p>
+      </Container>
+    </Section>
+
+    <Section id="experience">
+      <Container>
+        <SectionHeading eyebrow="Experience" title="Professional background." />
+      </Container>
+    </Section>
+
+    <Section id="projects">
+      <Container>
+        <SectionHeading eyebrow="Projects" title="Selected work." />
+      </Container>
+    </Section>
+
+    <Section id="research">
+      <Container>
+        <SectionHeading eyebrow="Research" title="Research and publications." />
+      </Container>
+    </Section>
+
+    <Section id="engineering">
+      <Container>
+        <SectionHeading eyebrow="Engineering" title="Engineering laboratory." />
+      </Container>
+    </Section>
+
+    <Section id="writing">
+      <Container>
+        <SectionHeading eyebrow="Writing" title="Technical writing." />
+      </Container>
+    </Section>
+
+    <Section id="contact">
+      <Container>
+        <SectionHeading eyebrow="Contact" title="Get in touch." />
+      </Container>
+    </Section>
   </main>
 </BaseLayout>
