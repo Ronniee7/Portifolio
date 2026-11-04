@@ -34,5 +34,5 @@ export const profile: Profile = {
   philosophy:
     'I build reliable software systems and intelligent solutions by combining software engineering, machine learning, and applied artificial intelligence. I value clear requirements, honest evaluation, and evidence over claims.',
   availability: 'Currently pursuing graduate studies at NUIST.',
-  photo: '/images/profile/asiimwe-ronald.jpg',
+  photo: '/images/profile/asiimwe-ronald.svg',
 };

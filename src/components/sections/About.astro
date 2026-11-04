@@ -1,0 +1,43 @@
+---
+import { profile } from '../../data/profile';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+---
+
+<Section id="about">
+  <Container>
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <SectionHeading eyebrow="About" title="From information systems to applied AI." />
+      </div>
+      <div class="lg:col-span-7 space-y-6 text-[var(--color-fg-muted)] leading-relaxed">
+        <p>
+          Asiimwe Ronald is a software engineer and postgraduate Artificial Intelligence student with a
+          background in Information Systems and Technology. His experience spans software development, IT
+          administration, web application development, database systems, and technology-driven organizational
+          solutions.
+        </p>
+        <p>
+          He has delivered production-oriented web systems — including inventory management for a
+          manufacturing organization and food-ordering workflows for a ministry — and has led technology
+          strategy for initiatives at the intersection of IoT, agriculture, and water security.
+        </p>
+        <p>
+          His professional development is now focused on combining strong software engineering foundations
+          with artificial intelligence and machine learning: supervised and ensemble learning, model
+          evaluation, generative AI, retrieval-augmented generation, and responsible AI. He is pursuing a
+          Master of Artificial Intelligence at NUIST under the 2026 China MOFCOM Scholarship.
+        </p>
+        <p>
+          Long term, he is interested in engineering reliable, efficient, and practical intelligent systems
+          that solve real-world problems, particularly in energy, agriculture, and software platforms for
+          Africa.
+        </p>
+        <blockquote class="border-l-2 border-[var(--color-accent)] pl-5 text-[var(--color-fg)] italic">
+          {profile.philosophy}
+        </blockquote>
+      </div>
+    </div>
+  </Container>
+</Section>

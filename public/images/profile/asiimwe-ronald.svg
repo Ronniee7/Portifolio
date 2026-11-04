@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#11161d" />
+      <stop offset="100%" stop-color="#0b0f14" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#g)" />
+  <circle cx="200" cy="160" r="70" fill="#1f2630" />
+  <rect x="100" y="260" width="200" height="120" rx="60" fill="#1f2630" />
+  <text x="200" y="205" text-anchor="middle" font-family="Space Grotesk, system-ui, sans-serif" font-size="64" font-weight="700" fill="#4cc9f0">AR</text>
+</svg>
