@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import Divider from '../../components/ui/Divider.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = await getCollection('projects');
+
+export async function getStaticPaths() {
+  const allProjects = await getCollection('projects');
+  return allProjects.map((project) => ({
+    params: { slug: project.id },
+  }));
+}
+
+const project = projects.find((p) => p.id === Astro.params.slug);
+
+if (!project) {
+  return new Response(null, { status: 404 });
+}
+
+const { Content } = await render(project);
+const data = project.data;
+
+const categoryLabels: Record<string, string> = {
+  'software-engineering': 'Software Engineering',
+  backend: 'Backend Engineering',
+  'full-stack': 'Full Stack',
+  'ai-ml': 'AI / Machine Learning',
+  research: 'Research',
+  'iot-cloud': 'IoT & Cloud',
+};
+
+const statusLabels: Record<string, { label: string; variant: 'default' | 'accent' | 'muted' | 'outline' }> = {
+  completed: { label: 'Completed', variant: 'default' },
+  'in-development': { label: 'In Development', variant: 'accent' },
+  planned: { label: 'Planned', variant: 'muted' },
+  'research-prototype': { label: 'Research Prototype', variant: 'outline' },
+};
+
+const statusInfo = statusLabels[data.status] ?? statusLabels.completed;
+const allSlugs = projects.map((p) => p.slug);
+const currentIndex = allSlugs.indexOf(data.slug ?? project.slug);
+const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+const nextProject = currentIndex < allSlugs.length - 1 ? projects[currentIndex + 1] : null;
+---
+
+<BaseLayout title={`${data.title} — Case Study — Asiimwe Ronald`} description={data.description}>
+  <main id="main">
+    <Section class="py-8 sm:py-12 lg:py-16">
+      <Container size="lg">
+        <div class="mb-8">
+          <a href="/projects" class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline mb-3">
+            ← Back to projects
+          </a>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Badge variant="muted" class="text-xs">{categoryLabels[data.category] ?? data.category}</Badge>
+            <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+          </div>
+          <h1 class="display text-3xl sm:text-4xl text-[var(--color-fg)]">{data.title}</h1>
+          <p class="mt-4 text-lg text-[var(--color-fg-muted)] leading-relaxed">{data.description}</p>
+        </div>
+
+        {data.image && (
+          <div class="mb-8 rounded-[var(--radius-xl)] overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-elevated)] aspect-[16/9]">
+            <img src={data.image} alt={data.title} width="1200" height="675" loading="eager" class="w-full h-full object-cover" />
+          </div>
+        )}
+
+        <div class="grid gap-6 lg:grid-cols-12">
+          <aside class="lg:col-span-3 space-y-6">
+            <h4 class="text-sm font-semibold text-[var(--color-fg)] uppercase tracking-wider">Meta</h4>
+            <div class="space-y-3 text-sm text-[var(--color-fg-muted)]">
+              <div class="flex justify-between">
+                <span>Status</span>
+                <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+              </div>
+              <div class="flex justify-between">
+                <span>Category</span>
+                <span>{categoryLabels[data.category] ?? data.category}</span>
+              </div>
+              {data.githubUrl && (
+                <a href={data.githubUrl} class="flex items-center gap-2 text-[var(--color-accent)] hover:underline" rel="noopener noreferrer" target="_blank">
+                  <span>GitHub</span>
+                </a>
+              )}
+              {data.liveUrl && (
+                <a href={data.liveUrl} class="flex items-center gap-2 text-[var(--color-accent)] hover:underline" rel="noopener noreferrer" target="_blank">
+                  <span>Live demo</span>
+                </a>
+              )}
+            </div>
+            {data.technologies.length > 0 && (
+              <div class="mt-2">
+                <h5 class="text-xs font-semibold text-[var(--color-fg-subtle)] uppercase tracking-wider mb-2">Technologies</h5>
+                <div class="flex flex-wrap gap-2">
+                  {data.technologies.map((tech) => (
+                    <Badge variant="outline" class="text-xs">{tech}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+
+          <article class="lg:col-span-9 space-y-8 prose-lg">
+            <Content />
+            <Divider />
+
+            <section class="space-y-4">
+              <h2 class="heading text-2xl text-[var(--color-fg)]">Navigation</h2>
+              <div class="flex flex-wrap gap-4 border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4 bg-[var(--color-surface)]">
+                {prevProject && (
+                  <a href={"/projects/" + prevProject.slug} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)]">
+                    <span>← {prevProject.data.title}</span>
+                  </a>
+                )}
+                {nextProject && (
+                  <a href={"/projects/" + nextProject.slug} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)] ml-auto">
+                    <span>{nextProject.data.title} →</span>
+                  </a>
+                )}
+              </div>
+            </section>
+          </article>
+        </div>
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

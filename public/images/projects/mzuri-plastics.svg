@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <rect x="40" y="60" width="140" height="110" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="220" y="60" width="140" height="110" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="80" y="200" width="240" height="50" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="110" y="120" text-anchor="middle" font-family="system-ui" font-size="14" fill="#4cc9f0">Django App</text>
+  <text x="290" y="120" text-anchor="middle" font-family="system-ui" font-size="14" fill="#e8e6e1">MySQL</text>
+  <text x="200" y="230" text-anchor="middle" font-family="system-ui" font-size="14" fill="#9aa3ad">Bootstrap Frontend</text>
+  <path d="M180 115 L210 115" stroke="#4cc9f0" stroke-width="2" marker-end="url(#a)"/>
+  <path d="M210 115 L210 135 L180 135 L180 115 Z" fill="#4cc9f0"/>
+  <path d="M150 170 L250 170" stroke="#4cc9f0" stroke-width="2" marker-end="url(#b)"/>
+  <path d="M250 170 L230 160 L250 170 L230 180 Z" fill="#4cc9f0"/>
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#4cc9f0"/></marker><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="#4cc9f0"/></marker></defs>
+</svg>

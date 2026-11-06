@@ -7,6 +7,7 @@ const projects = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    slug: z.string().optional(),
     status: z.enum(['completed', 'in-development', 'planned', 'research-prototype']),
     category: z.enum(['software-engineering', 'backend', 'full-stack', 'ai-ml', 'research', 'iot-cloud']),
     technologies: z.array(z.string()).default([]),
@@ -14,6 +15,7 @@ const projects = defineCollection({
     githubUrl: z.string().url().optional(),
     liveUrl: z.string().url().optional(),
     featured: z.boolean().default(false),
+    date: z.coerce.date().optional(),
   }),
 });
 
@@ -21,12 +23,32 @@ const research = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/research' }),
   schema: z.object({
     title: z.string(),
-    authors: z.array(z.string()).default(['Asiimwe Ronald']),
-    institution: z.string(),
+    description: z.string(),
+    slug: z.string().optional(),
+    type: z.enum(['project', 'interest']).default('project'),
+    status: z.enum(['ongoing', 'planned', 'completed']),
     area: z.string(),
+    institution: z.string().optional(),
+    supervisor: z.string().optional(),
     abstract: z.string(),
     keywords: z.array(z.string()).default([]),
-    status: z.enum(['ongoing', 'submitted', 'published']),
+    technologies: z.array(z.string()).default([]),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
+    date: z.coerce.date().optional(),
+  }),
+});
+
+const publications = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/publications' }),
+  schema: z.object({
+    title: z.string(),
+    authors: z.array(z.string()).default(['Asiimwe Ronald']),
+    venue: z.string(),
+    year: z.number().optional(),
+    abstract: z.string(),
+    keywords: z.array(z.string()).default([]),
+    status: z.enum(['published', 'accepted', 'submitted', 'in-preparation']),
     pdfUrl: z.string().url().optional(),
     doi: z.string().optional(),
     publicationUrl: z.string().url().optional(),
@@ -47,4 +69,4 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { projects, research, writing };
+export const collections = { projects, research, publications, writing };

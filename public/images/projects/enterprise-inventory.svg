@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <rect x="50" y="70" width="110" height="90" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="240" y="70" width="110" height="90" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="50" y="180" width="110" height="90" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="240" y="180" width="110" height="90" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="105" y="120" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4cc9f0">API (Django/FastAPI)</text>
+  <text x="295" y="120" text-anchor="middle" font-family="system-ui" font-size="12" fill="#e8e6e1">PostgreSQL</text>
+  <text x="105" y="230" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4cc9f0">React Frontend</text>
+  <text x="295" y="230" text-anchor="middle" font-family="system-ui" font-size="12" fill="#9aa3ad">Redis + Docker</text>
+  <path d="M160 115 L230 115" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M160 225 L230 225" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M150 160 L150 175 L250 175 L250 160 Z" fill="#4cc9f0" opacity="0.6"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <rect x="40" y="50" width="100" height="70" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="260" y="50" width="100" height="70" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="40" y="150" width="100" height="70" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="260" y="150" width="100" height="70" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="140" y="230" width="120" height="40" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="90" y="90" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4cc9f0">Training</text>
+  <text x="310" y="90" text-anchor="middle" font-family="system-ui" font-size="12" fill="#e8e6e1">MLflow</text>
+  <text x="90" y="190" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4cc9f0">Docker</text>
+  <text x="310" y="190" text-anchor="middle" font-size="12" fill="#9aa3ad">Prometheus</text>
+  <text x="200" y="255" text-anchor="middle" font-family="system-ui" font-size="12" fill="#9aa3ad">Evidently Drift</text>
+  <path d="M140 85 L250 85" stroke="#4cc9f0" stroke-width="2" opacity="0.5"/>
+  <path d="M140 185 L250 185" stroke="#4cc9f0" stroke-width="2" opacity="0.5"/>
+  <path d="M190 205 L210 220" stroke="#4cc9f0" stroke-width="2" opacity="0.5"/>
+</svg>

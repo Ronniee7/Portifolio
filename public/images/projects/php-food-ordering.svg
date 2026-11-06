@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <rect x="50" y="70" width="120" height="120" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="230" y="70" width="120" height="120" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="120" y="210" width="160" height="40" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="110" y="135" text-anchor="middle" font-family="system-ui" font-size="13" fill="#4cc9f0">PHP</text>
+  <text x="290" y="135" text-anchor="middle" font-family="system-ui" font-size="13" fill="#e8e6e1">MySQL</text>
+  <text x="200" y="235" text-anchor="middle" font-family="system-ui" font-size="13" fill="#9aa3ad">HTML/CSS/JS</text>
+  <path d="M170 130 L220 130" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M220 130 L220 110 L190 130 L220 150 Z" fill="#4cc9f0"/>
+  <path d="M135 190 L200 190" stroke="#4cc9f0" stroke-width="2" opacity="0.6"/>
+  <path d="M200 190 L200 175 L170 190 L200 205 Z" fill="#4cc9f0" opacity="0.6"/>
+</svg>

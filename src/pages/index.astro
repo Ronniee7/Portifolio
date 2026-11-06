@@ -16,13 +16,34 @@ import SectionHeading from '../components/ui/SectionHeading.astro';
 
     <Section id="projects">
       <Container>
-        <SectionHeading eyebrow="Projects" title="Selected work." description="Project gallery coming in Phase 4." />
+        <SectionHeading
+          eyebrow="Projects"
+          title="Selected work."
+          description="A curated selection of software engineering, machine learning, AI, and research projects."
+        />
+        <p class="mt-6 text-[var(--color-fg-muted)]">
+          View the full project gallery with filters and detailed case studies.
+        </p>
+        <div class="mt-6">
+          <Button href="/projects" variant="primary" size="md">View all projects</Button>
+        </div>
       </Container>
     </Section>
 
     <Section id="research">
       <Container>
-        <SectionHeading eyebrow="Research" title="Research and publications." description="Research section coming in Phase 5." />
+        <SectionHeading
+          eyebrow="Research"
+          title="Research and publications."
+          description="Ongoing research in applied machine learning, responsible AI, and intelligent energy systems."
+        />
+        <p class="mt-6 text-[var(--color-fg-muted)]">
+          Explore current research directions and verified publications.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/research" class="text-sm text-[var(--color-accent)] hover:underline font-medium">View all research</a>
+          <a href="/publications" class="text-sm text-[var(--color-accent)] hover:underline font-medium">View publications</a>
+        </div>
       </Container>
     </Section>
 

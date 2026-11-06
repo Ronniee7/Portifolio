@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <circle cx="200" cy="110" r="50" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="60" y="200" width="280" height="60" rx="10" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="200" y="115" text-anchor="middle" font-family="system-ui" font-size="14" fill="#4cc9f0">Users</text>
+  <text x="200" y="235" text-anchor="middle" font-family="system-ui" font-size="14" fill="#e8e6e1">Django Network Platform</text>
+  <circle cx="80" cy="110" r="20" fill="#1f2630" stroke="#4cc9f0"/>
+  <circle cx="130" cy="130" r="20" fill="#1f2630" stroke="#4cc9f0"/>
+  <circle cx="270" cy="130" r="20" fill="#1f2630" stroke="#4cc9f0"/>
+  <circle cx="320" cy="110" r="20" fill="#1f2630" stroke="#4cc9f0"/>
+  <path d="M100 110 L140 120" stroke="#4cc9f0" stroke-width="1.5" opacity="0.5"/>
+  <path d="M150 130 L190 115" stroke="#4cc9f0" stroke-width="1.5" opacity="0.5"/>
+  <path d="M250 130 L210 115" stroke="#4cc9f0" stroke-width="1.5" opacity="0.5"/>
+  <path d="M300 110 L250 115" stroke="#4cc9f0" stroke-width="1.5" opacity="0.5"/>
+</svg>

@@ -1,0 +1,121 @@
+---
+import { getCollection, render } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import MermaidDiagram from '../../components/ui/MermaidDiagram.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const researchEntries = await getCollection('research');
+
+export async function getStaticPaths() {
+  const allEntries = await getCollection('research');
+  return allEntries.map((entry) => ({
+    params: { slug: entry.id },
+  }));
+}
+
+const entry = researchEntries.find((e) => e.id === Astro.params.slug);
+
+if (!entry) {
+  return new Response(null, { status: 404 });
+}
+
+const { Content } = await render(entry);
+const data = entry.data;
+
+const statusLabels: Record<string, { label: string; variant: string }> = {
+  ongoing: { label: 'Ongoing', variant: 'accent' },
+  planned: { label: 'Planned', variant: 'muted' },
+  completed: { label: 'Completed', variant: 'default' },
+};
+
+const typeLabels: Record<string, string> = {
+  project: 'Research Project',
+  interest: 'Research Interest',
+};
+
+const statusInfo = statusLabels[data.status] ?? statusLabels.ongoing;
+---
+<BaseLayout title={data.title + ' — Research — Asiimwe Ronald'} description={data.description}>
+  <main id="main">
+    <Section class="py-8 sm:py-12 lg:py-16">
+      <Container size="lg">
+        <div class="mb-8">
+          <a href="/research" class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline mb-3">
+            ← Back to research
+          </a>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+            <Badge variant="outline" class="text-xs">{typeLabels[data.type]}</Badge>
+          </div>
+          <h1 class="display text-3xl sm:text-4xl text-[var(--color-fg)]">{data.title}</h1>
+          <p class="mt-4 text-lg text-[var(--color-fg-muted)] leading-relaxed">{data.description}</p>
+        </div>
+
+        {data.image && (
+          <div class="mb-8 rounded-[var(--radius-xl)] overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-elevated)] aspect-[16/9]">
+            <img src={data.image} alt={data.title} width="1200" height="675" loading="eager" class="w-full h-full object-cover" />
+          </div>
+        )}
+
+        <div class="grid gap-6 lg:grid-cols-12">
+          <aside class="lg:col-span-3 space-y-6">
+            <h4 class="text-sm font-semibold text-[var(--color-fg)] uppercase tracking-wider">Meta</h4>
+            <div class="space-y-3 text-sm text-[var(--color-fg-muted)]">
+              <div class="flex justify-between">
+                <span>Status</span>
+                <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+              </div>
+              <div class="flex justify-between">
+                <span>Type</span>
+                <span>{typeLabels[data.type]}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Area</span>
+                <span>{data.area}</span>
+              </div>
+              {data.institution && (
+                <div class="flex justify-between">
+                  <span>Institution</span>
+                  <span>{data.institution}</span>
+                </div>
+              )}
+              {data.supervisor && (
+                <div class="flex justify-between">
+                  <span>Supervisor</span>
+                  <span>{data.supervisor}</span>
+                </div>
+              )}
+            </div>
+            {data.technologies.length > 0 && (
+              <div class="mt-6">
+                <h5 class="text-xs font-semibold text-[var(--color-fg-subtle)] uppercase tracking-wider mb-2">Technologies</h5>
+                <div class="flex flex-wrap gap-2">
+                  {data.technologies.map((tech) => (
+                    <Badge variant="outline" key={tech} class="text-xs">{tech}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+            {data.keywords.length > 0 && (
+              <div class="mt-6">
+                <h5 class="text-xs font-semibold text-[var(--color-fg-subtle)] uppercase tracking-wider mb-2">Keywords</h5>
+                <div class="flex flex-wrap gap-2">
+                  {data.keywords.map((kw) => (
+                    <Badge variant="muted" key={kw} class="text-xs">{kw}</Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+
+          <article class="lg:col-span-9 space-y-8 prose-lg">
+            <Content />
+          </article>
+        </div>
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

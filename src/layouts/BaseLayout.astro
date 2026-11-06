@@ -12,7 +12,7 @@ interface Props {
 const {
   title = 'Asiimwe Ronald — Software Engineer | AI/ML Engineer | Researcher',
   description = 'Software engineer and AI researcher focused on building reliable systems, intelligent applications, and practical machine learning solutions.',
-  image = '/images/profile/asiimwe-ronald.jpg',
+  image = '/images/profile/asiimwe-ronald.svg',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://asiimweronald.pages.dev');
@@ -77,6 +77,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://asiimwerona
           localStorage.setItem('theme', 'light');
         }
       };
+    </script>
+    <script is:inline>
+      // Render mermaid diagrams from ```mermaid code blocks
+      (function () {
+        const theme = document.documentElement.classList.contains('light') ? 'default' : 'dark';
+        mermaid.initialize({ startOnLoad: true, theme, securityLevel: 'loose' });
+      })();
     </script>
   </body>
 </html>

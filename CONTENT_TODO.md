@@ -32,6 +32,8 @@ This file lists information that is missing, unverified, or must be confirmed by
 - [ ] Battery Energy Storage System Control Parameter Optimization: any simulation results are research directions only — do not invent.
 - [ ] Supervisor name/title confirmation: Dr. Xudong Gao.
 - [ ] ResearchGate link when available.
+- [ ] ICTM 2026 final publication status for "Responsible Generative AI for Customer Service" — verify before marking as published.
+- [ ] No verified journal publications yet — publications section shows only verified submissions.
 
 ## Education and Certifications
 - [ ] HSK learning journey details (optional).

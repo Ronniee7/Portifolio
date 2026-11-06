@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Card from '../../components/ui/Card.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const publications = await getCollection('publications');
+
+const statusLabels: Record<string, { label: string; variant: string }> = {
+  published: { label: 'Published', variant: 'default' },
+  accepted: { label: 'Accepted', variant: 'accent' },
+  submitted: { label: 'Submitted', variant: 'muted' },
+  'in-preparation': { label: 'In Preparation', variant: 'outline' },
+};
+---
+<BaseLayout title="Publications — Asiimwe Ronald" description="Publications and working papers by Asiimwe Ronald.">
+  <main id="main">
+    <Section id="publications">
+      <Container size="lg">
+        <SectionHeading
+          eyebrow="Publications"
+          title="Research publications."
+          description="Peer-reviewed and conference publications, with verified submission and publication status."
+        />
+
+        <div class="space-y-6">
+          {publications.map((pub) => {
+            const data = pub.data;
+            const statusInfo = statusLabels[data.status] ?? statusLabels.submitted;
+            return (
+              <Card key={pub.id} variant="default" class="flex flex-col gap-4 p-6">
+                <div class="flex flex-wrap gap-2 mb-2">
+                  <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+                  <Badge variant="outline" class="text-xs">{data.venue}</Badge>
+                </div>
+                <h3 class="text-lg font-semibold text-[var(--color-fg)]">{data.title}</h3>
+                <p class="mt-2 text-sm text-[var(--color-fg-muted)] leading-relaxed">{data.authors.join(', ')}. {data.venue}{data.year ? ', ' + data.year : ''}.</p>
+                <div class="mt-4">
+                  <h5 class="text-xs font-semibold text-[var(--color-fg-subtle)] uppercase tracking-wider mb-2">Abstract</h5>
+                  <p class="text-sm text-[var(--color-fg-muted)] leading-relaxed">{data.abstract}</p>
+                </div>
+                <div class="border-t border-[var(--color-border)] pt-4">
+                  <div class="flex flex-wrap gap-2 mb-3">
+                    {data.keywords.map((kw) => (
+                      <Badge variant="muted" key={kw} class="text-xs">{kw}</Badge>
+                    ))}
+                  </div>
+                  <div class="flex flex-wrap gap-3">
+                    {data.publicationUrl && (
+                      <a
+                        href={data.publicationUrl}
+                        class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        Publication link <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+                    {data.doi && (
+                      <a
+                        href="https://doi.org/" + data.doi
+                        class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        DOI: {data.doi} <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+                    {data.pdfUrl && (
+                      <a
+                        href={data.pdfUrl}
+                        class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        PDF <span aria-hidden="true">→</span>
+                      </a>
+                    )}
+                    {!data.publicationUrl && !data.doi && !data.pdfUrl && (
+                      <span class="text-xs text-[var(--color-fg-subtle)]">No public link available yet.</span>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
+        {publications.length === 0 && (
+          <p class="text-[var(--color-fg-muted)]">No publications yet.</p>
+        )}
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

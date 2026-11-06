@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <rect x="40" y="60" width="120" height="100" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="240" y="60" width="120" height="100" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="140" y="180" width="120" height="60" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="100" y="115" text-anchor="middle" font-family="system-ui" font-size="12" fill="#4cc9f0">PDF Ingestion</text>
+  <text x="300" y="115" text-anchor="middle" font-family="system-ui" font-size="12" fill="#e8e6e1">LLM + RAG</text>
+  <text x="200" y="215" text-anchor="middle" font-family="system-ui" font-size="12" fill="#9aa3ad">Citations &amp; Sources</text>
+  <path d="M160 110 L230 110" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M190 160 L210 175" stroke="#4cc9f0" stroke-width="2" opacity="0.5"/>
+</svg>

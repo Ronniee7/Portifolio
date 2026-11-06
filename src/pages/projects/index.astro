@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../../components/cards/ProjectCard.astro';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = await getCollection('projects');
+---
+<BaseLayout title="Projects">
+  <main id="main">
+    <Section id="projects">
+      <Container>
+        <SectionHeading eyebrow="Projects" title="Selected work." />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              category="Software"
+              status={project.data.status}
+              technologies={project.data.technologies}
+              image={project.data.image}
+              href="/projects/test"
+            />
+          ))}
+        </div>
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#11161d"/><stop offset="100%" stop-color="#0b0f14"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#161c24"/><stop offset="100%" stop-color="#121820"/></linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g1)"/>
+  <circle cx="100" cy="90" r="30" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="160" y="40" width="140" height="100" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="160" y="160" width="140" height="60" rx="8" fill="url(#g2)" stroke="#1f2630"/>
+  <rect x="320" y="90" width="70" height="60" rx="6" fill="url(#g2)" stroke="#1f2630"/>
+  <text x="100" y="95" text-anchor="middle" font-family="system-ui" font-size="13" fill="#4cc9f0">User</text>
+  <text x="230" y="95" text-anchor="middle" font-family="system-ui" font-size="13" fill="#e8e6e1">RAG Pipeline</text>
+  <text x="230" y="190" text-anchor="middle" font-family="system-ui" font-size="13" fill="#9aa3ad">pgvector + BM25</text>
+  <text x="355" y="125" text-anchor="middle" font-family="system-ui" font-size="13" fill="#f87171">HITL</text>
+  <path d="M130 90 L155 90" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M300 90 L315 90" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M230 140 L230 155" stroke="#4cc9f0" stroke-width="2"/>
+  <path d="M300 120 L315 120" stroke="#f87171" stroke-width="2"/>
+</svg>
