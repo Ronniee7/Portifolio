@@ -9,7 +9,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const publications = await getCollection('publications');
 
-const statusLabels: Record<string, { label: string; variant: string }> = {
+const statusLabels: Record<string, { label: string; variant: 'default' | 'accent' | 'muted' | 'outline' }> = {
   published: { label: 'Published', variant: 'default' },
   accepted: { label: 'Accepted', variant: 'accent' },
   submitted: { label: 'Submitted', variant: 'muted' },

@@ -12,32 +12,28 @@ const { code, id = `mermaid-${Math.random().toString(36).slice(2, 8)}`, class: c
   <div id={id} class="mermaid" aria-label="Diagram"></div>
 </div>
 
-<script>
-  import mermaid from 'mermaid';
-
-  const id = <%- JSON.stringify(id) %>;
-  const code = <%- JSON.stringify(code) %>;
-
-  function render() {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const theme = document.documentElement.classList.contains('light') ? 'default' : 'dark';
-    mermaid.initialize({ startOnLoad: false, theme, securityLevel: 'loose' });
-    mermaid.render(id, code).then(({ svg }) => {
-      el.innerHTML = svg;
-      el.setAttribute('aria-label', 'Diagram');
-    });
-  }
-
-  if (typeof window !== 'undefined') {
-    render();
-    // Re-render on theme changes
-    const observer = new MutationObserver(() => {
-      const isLight = document.documentElement.classList.contains('light');
-      const theme = isLight ? 'default' : 'dark';
+<script define:vars={{ id, code }}>
+  (async () => {
+    const { default: mermaid } = await import('mermaid');
+    function renderDiagram() {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const theme = document.documentElement.classList.contains('light') ? 'default' : 'dark';
       mermaid.initialize({ startOnLoad: false, theme, securityLevel: 'loose' });
-      render();
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-  }
+      mermaid.render(id, code).then(({ svg }) => {
+        el.innerHTML = svg;
+        el.setAttribute('aria-label', 'Diagram');
+      });
+    }
+    if (typeof window !== 'undefined') {
+      renderDiagram();
+      const observer = new MutationObserver(() => {
+        const isLight = document.documentElement.classList.contains('light');
+        const theme = isLight ? 'default' : 'dark';
+        mermaid.initialize({ startOnLoad: false, theme, securityLevel: 'loose' });
+        renderDiagram();
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    }
+  })();
 </script>

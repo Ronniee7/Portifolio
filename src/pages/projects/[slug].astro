@@ -3,9 +3,7 @@ import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
 import Container from '../../components/ui/Container.astro';
 import Section from '../../components/ui/Section.astro';
-import SectionHeading from '../../components/ui/SectionHeading.astro';
 import Badge from '../../components/ui/Badge.astro';
-import Button from '../../components/ui/Button.astro';
 import Divider from '../../components/ui/Divider.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -44,8 +42,8 @@ const statusLabels: Record<string, { label: string; variant: 'default' | 'accent
 };
 
 const statusInfo = statusLabels[data.status] ?? statusLabels.completed;
-const allSlugs = projects.map((p) => p.slug);
-const currentIndex = allSlugs.indexOf(data.slug ?? project.slug);
+const allSlugs = projects.map((p) => p.id);
+const currentIndex = allSlugs.indexOf(project.id);
 const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
 const nextProject = currentIndex < allSlugs.length - 1 ? projects[currentIndex + 1] : null;
 ---
@@ -115,12 +113,12 @@ const nextProject = currentIndex < allSlugs.length - 1 ? projects[currentIndex +
               <h2 class="heading text-2xl text-[var(--color-fg)]">Navigation</h2>
               <div class="flex flex-wrap gap-4 border border-[var(--color-border)] rounded-[var(--radius-lg)] p-4 bg-[var(--color-surface)]">
                 {prevProject && (
-                  <a href={"/projects/" + prevProject.slug} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)]">
+                  <a href={"/projects/" + prevProject.id} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)]">
                     <span>← {prevProject.data.title}</span>
                   </a>
                 )}
                 {nextProject && (
-                  <a href={"/projects/" + nextProject.slug} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)] ml-auto">
+                  <a href={"/projects/" + nextProject.id} class="flex items-center gap-2 text-sm text-[var(--color-fg-muted)] hover:text-[var(--color-accent)] ml-auto">
                     <span>{nextProject.data.title} →</span>
                   </a>
                 )}

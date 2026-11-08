@@ -78,12 +78,18 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://asiimwerona
         }
       };
     </script>
-    <script is:inline>
-      // Render mermaid diagrams from ```mermaid code blocks
-      (function () {
+    <script>
+      import mermaid from 'mermaid';
+      function renderMermaid() {
         const theme = document.documentElement.classList.contains('light') ? 'default' : 'dark';
-        mermaid.initialize({ startOnLoad: true, theme, securityLevel: 'loose' });
-      })();
+        mermaid.initialize({ startOnLoad: false, theme, securityLevel: 'loose' });
+        mermaid.run({ querySelector: '.mermaid' }).catch(() => {});
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderMermaid);
+      } else {
+        renderMermaid();
+      }
     </script>
   </body>
 </html>
