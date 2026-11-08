@@ -69,4 +69,22 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { projects, research, publications, writing };
+const engineering = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/engineering' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    slug: z.string().optional(),
+    category: z.enum(['philosophy', 'backend', 'devops', 'ml-engineering', 'ai-applications', 'energy-systems', 'architecture', 'practices']).default('backend'),
+    tags: z.array(z.string()).default([]),
+    status: z.enum(['implemented', 'research-prototype', 'proposed', 'in-progress']).default('implemented'),
+    author: z.string().default('Asiimwe Ronald'),
+    pubDate: z.coerce.date().optional(),
+    updatedDate: z.coerce.date().optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+    order: z.number().optional(),
+  }),
+});
+
+export const collections = { projects, research, publications, writing, engineering };

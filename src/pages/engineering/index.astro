@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Card from '../../components/ui/Card.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const entries = await getCollection('engineering');
+
+const statusLabels: Record<string, { label: string; variant: 'default' | 'accent' | 'muted' | 'outline' }> = {
+  implemented: { label: 'Implemented', variant: 'default' },
+  'research-prototype': { label: 'Research Prototype', variant: 'outline' },
+  proposed: { label: 'Proposed', variant: 'muted' },
+  'in-progress': { label: 'In Progress', variant: 'accent' },
+};
+
+const categoryLabels: Record<string, string> = {
+  philosophy: 'Engineering Philosophy',
+  backend: 'Backend Engineering',
+  devops: 'DevOps & Quality',
+  'ml-engineering': 'ML Engineering',
+  'ai-applications': 'AI Applications',
+  'energy-systems': 'Intelligent Energy Systems',
+  architecture: 'Architecture',
+  practices: 'Standards & Practices',
+};
+---
+
+<BaseLayout title="Engineering Lab — Asiimwe Ronald" description="Technical deep dives, system architecture, and engineering practices.">
+  <main id="main">
+    <Section id="engineering">
+      <Container size="lg">
+        <SectionHeading
+          eyebrow="Engineering Lab"
+          title="How I design and build systems."
+          description="Technical deep dives, architecture, and engineering practices. Implemented work is distinguished from research prototypes and proposed designs."
+        />
+
+        <div class="mb-12">
+          <h3 class="text-sm uppercase tracking-widest text-[var(--color-fg-subtle)] mb-6">Deep dives</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {entries
+              .filter((e) => !e.data.draft)
+              .sort((a, b) => (a.data.order ?? 99) - (b.data.order ?? 99))
+              .map((entry) => {
+                const data = entry.data;
+                const statusInfo = statusLabels[data.status] ?? statusLabels.implemented;
+                return (
+                  <Card variant="default" class="flex flex-col gap-4 p-6">
+                    <div>
+                      <div class="flex flex-wrap gap-2 mb-2">
+                        <Badge variant={statusInfo.variant} class="text-xs">{statusInfo.label}</Badge>
+                        <Badge variant="outline" class="text-xs">{categoryLabels[data.category] ?? data.category}</Badge>
+                      </div>
+                      <h3 class="text-lg font-semibold text-[var(--color-fg)]">{data.title}</h3>
+                      <p class="mt-2 text-sm text-[var(--color-fg-muted)] leading-relaxed">{data.description}</p>
+                    </div>
+                    <div class="border-t border-[var(--color-border)] pt-4">
+                      <div class="flex flex-wrap gap-2 mb-3">
+                        {data.tags.map((tag) => (
+                          <Badge variant="muted" key={tag} class="text-xs">{tag}</Badge>
+                        ))}
+                      </div>
+                      <a
+                        href={"/engineering/" + entry.id}
+                        class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline font-medium"
+                      >
+                        Read deep dive <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </Card>
+                );
+              })}
+          </div>
+        </div>
+
+        {entries.length === 0 && (
+          <p class="text-[var(--color-fg-muted)]">No engineering articles yet. Add Markdown files to <code class="mono">src/content/engineering/</code>.</p>
+        )}
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>

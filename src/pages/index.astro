@@ -6,6 +6,7 @@ import Experience from '../components/sections/Experience.astro';
 import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
+import Button from '../components/ui/Button.astro';
 ---
 
 <BaseLayout>
@@ -49,7 +50,13 @@ import SectionHeading from '../components/ui/SectionHeading.astro';
 
     <Section id="engineering">
       <Container>
-        <SectionHeading eyebrow="Engineering" title="Engineering laboratory." description="Engineering lab coming in Phase 6." />
+        <SectionHeading eyebrow="Engineering" title="Engineering laboratory." description="Technical deep dives, system architecture, and engineering practices." />
+        <p class="mt-6 text-[var(--color-fg-muted)]">
+          Explore backend engineering, DevOps and quality, machine learning engineering, AI application architecture, and intelligent energy systems.
+        </p>
+        <div class="mt-6">
+          <Button href="/engineering" variant="primary" size="md">Open engineering lab</Button>
+        </div>
       </Container>
     </Section>
 
