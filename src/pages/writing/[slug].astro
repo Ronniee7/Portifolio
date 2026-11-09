@@ -1,0 +1,89 @@
+---
+import { getCollection, render } from 'astro:content';
+import Container from '../../components/ui/Container.astro';
+import Section from '../../components/ui/Section.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = await getCollection('writing');
+
+export async function getStaticPaths() {
+  const all = (await getCollection('writing')).filter((p) => !p.data.draft);
+  return all.map((p) => ({ params: { slug: p.id } }));
+}
+
+const post = posts.find((p) => p.id === Astro.params.slug);
+if (!post) {
+  return new Response(null, { status: 404 });
+}
+
+const { Content } = await render(post);
+const data = post.data;
+
+function readingTime(body: string) {
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+const rt = readingTime(post.body ?? '');
+
+const related = posts
+  .filter((p) => p.id !== post.id && !p.data.draft && (p.data.category === data.category || p.data.tags.some((t) => data.tags.includes(t))))
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title={`${data.title} — Writing — Asiimwe Ronald`}
+  description={data.description}
+  image="/images/profile/asiimwe-ronald.png"
+>
+  <main id="main">
+    <Section class="py-8 sm:py-12 lg:py-16">
+      <Container size="lg">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Writing', href: '/writing' }, { label: data.title }]} />
+        <div class="mt-6 flex flex-wrap gap-2 mb-4">
+          <Badge variant="muted" class="text-xs">{data.category}</Badge>
+          {data.tags.map((t) => (
+            <Badge variant="outline" class="text-xs" key={t}>{t}</Badge>
+          ))}
+        </div>
+        <h1 class="display text-3xl sm:text-4xl text-[var(--color-fg)]">{data.title}</h1>
+        <p class="mt-4 text-lg text-[var(--color-fg-muted)] leading-relaxed">{data.description}</p>
+        <div class="mt-4 flex flex-wrap items-center gap-4 text-xs text-[var(--color-fg-subtle)]">
+          <time datetime={data.pubDate.toISOString()}>{data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+          {data.updatedDate && <span>Updated {data.updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+          <span>{rt} min read</span>
+          <span>By {data.author}</span>
+        </div>
+
+        <article class="mt-8 prose-lg space-y-6">
+          <Content />
+        </article>
+
+        <script type="application/ld+json" set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: data.title,
+          description: data.description,
+          author: { '@type': 'Person', name: data.author },
+          datePublished: data.pubDate.toISOString(),
+          dateModified: (data.updatedDate ?? data.pubDate).toISOString(),
+        })} />
+
+        {related.length > 0 && (
+          <section class="mt-12">
+            <h2 class="heading text-2xl text-[var(--color-fg)] mb-4">Related articles</h2>
+            <div class="grid gap-4 sm:grid-cols-2">
+              {related.map((r) => (
+                <a href={'/writing/' + r.id} class="block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 hover:border-[var(--color-accent)] transition-colors">
+                  <h3 class="font-semibold text-[var(--color-fg)]">{r.data.title}</h3>
+                  <p class="mt-1 text-sm text-[var(--color-fg-muted)]">{r.data.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+      </Container>
+    </Section>
+  </main>
+</BaseLayout>
