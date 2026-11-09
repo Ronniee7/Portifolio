@@ -5,6 +5,7 @@ import Container from '../../components/ui/Container.astro';
 import Section from '../../components/ui/Section.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Divider from '../../components/ui/Divider.astro';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const projects = await getCollection('projects');
@@ -52,7 +53,8 @@ const nextProject = currentIndex < allSlugs.length - 1 ? projects[currentIndex +
   <main id="main">
     <Section class="py-8 sm:py-12 lg:py-16">
       <Container size="lg">
-        <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: data.title }]} />
+        <div class="mb-8 mt-4">
           <a href="/projects" class="inline-flex items-center gap-2 text-sm text-[var(--color-accent)] hover:underline mb-3">
             ← Back to projects
           </a>

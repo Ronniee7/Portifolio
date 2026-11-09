@@ -38,7 +38,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://asiimwerona
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="Asiimwe Ronald — Writing" href="/rss.xml" />
     <meta name="theme-color" content="#0b0f14" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Asiimwe Ronald',
+      jobTitle: 'Software Engineer | AI/ML Engineer | Researcher',
+      url: canonical.toString(),
+      sameAs: ['https://github.com/Ronniee7', 'https://www.linkedin.com/in/asiimwe-ronald'],
+    })} />
     <script is:inline>
       (function () {
         const stored = localStorage.getItem('theme');

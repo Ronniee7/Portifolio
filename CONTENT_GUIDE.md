@@ -1,3 +1,40 @@
+## Adding a Writing Article
+
+1. Create a Markdown file in `src/content/writing/`, e.g. `my-article.md`.
+2. Complete frontmatter:
+
+```yaml
+---
+title: Your Title
+description: One-sentence summary.
+pubDate: 2026-10-30
+updatedDate: 2026-10-31
+tags:
+  - tag1
+category: software-engineering # software-engineering | machine-learning | ai-research | devops | tutorials | reflections
+author: Asiimwe Ronald
+draft: true
+---
+```
+
+3. Set `draft: false` only when ready to publish.
+4. Run `npm run build` and `npx astro check`.
+
+## Adding Skills
+Edit `src/data/skills.ts`. Set `level` to `practical`, `academic`, or `learning`.
+
+## Adding Certifications
+Edit `src/data/certifications.ts`. Only verified achievements.
+
+## Updating Availability
+Edit `availabilityStatement` in `src/data/certifications.ts` or `profile.availability`.
+
+## Updating Profile / Social Links
+Edit `src/data/profile.ts` and `src/data/social-links.ts`. Hide unconfigured links.
+
+---
+
+
 # CONTENT GUIDE — ASIIMWE RONALD PORTFOLIO
 
 This guide explains how to add and update content. Engineering Lab content is part of this guide.
