@@ -3,10 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import About from '../components/sections/About.astro';
 import Experience from '../components/sections/Experience.astro';
+import Contact from '../components/sections/Contact.astro';
 import Container from '../components/ui/Container.astro';
 import Section from '../components/ui/Section.astro';
 import SectionHeading from '../components/ui/SectionHeading.astro';
 import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import Card from '../components/ui/Card.astro';
+import { getCollection } from 'astro:content';
+import { skills } from '../data/skills';
+import { openSourceRepos, githubProfileUrl } from '../data/open-source';
+import { certifications, availabilityStatement } from '../data/certifications';
+
+const projects = (await getCollection('projects')).filter((p) => p.data.featured).slice(0, 3);
+const researchEntries = (await getCollection('research')).filter((r) => r.data.featured).slice(0, 3);
+const writingPosts = (await getCollection('writing')).filter((w) => !w.data.draft).sort((a,b)=>b.data.pubDate.getTime()-a.data.pubDate.getTime()).slice(0,3);
 ---
 
 <BaseLayout>
@@ -14,36 +25,71 @@ import Button from '../components/ui/Button.astro';
     <Hero />
     <About />
     <Experience />
+    <Section id="skills">
+      <Container>
+        <SectionHeading eyebrow="Skills" title="Technical skills." description="Grouped by domain. No arbitrary proficiency percentages." />
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((cat) => (
+            <Card variant="default" class="p-5">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-semibold text-[var(--color-fg)]">{cat.name}</h3>
+                {cat.level && <Badge variant="muted" class="text-xs">{cat.level}</Badge>}
+              </div>
+              <div class="flex flex-wrap gap-2">
+                {cat.items.map((it) => (
+                  <Badge variant="outline" class="text-xs" key={it}>{it}</Badge>
+                ))}
+              </div>
+              {cat.note && <p class="mt-3 text-xs text-[var(--color-fg-subtle)]">{cat.note}</p>}
+            </Card>
+          ))}
+        </div>
+      </Container>
+    </Section>
 
     <Section id="projects">
       <Container>
-        <SectionHeading
-          eyebrow="Projects"
-          title="Selected work."
-          description="A curated selection of software engineering, machine learning, AI, and research projects."
-        />
-        <p class="mt-6 text-[var(--color-fg-muted)]">
-          View the full project gallery with filters and detailed case studies.
-        </p>
+        <SectionHeading eyebrow="Projects" title="Featured projects." description="A selection of software engineering, machine learning, and research projects." />
+        {projects.length > 0 ? (
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((p) => (
+              <Card variant="default" class="p-5 flex flex-col">
+                <Badge variant="muted" class="text-xs w-fit mb-3">{p.data.status}</Badge>
+                <h3 class="text-lg font-semibold text-[var(--color-fg)]">{p.data.title}</h3>
+                <p class="mt-2 text-sm text-[var(--color-fg-muted)] flex-1">{p.data.description}</p>
+                <a href={'/projects/' + p.id} class="mt-4 text-sm text-[var(--color-accent)] hover:underline">Case study →</a>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <p class="mt-6 text-[var(--color-fg-muted)]">Featured projects will appear here once marked <code class="mono">featured: true</code>.</p>
+        )}
         <div class="mt-6">
-          <Button href="/projects" variant="primary" size="md">View all projects</Button>
+          <Button href="/projects" variant="secondary" size="md">View all projects</Button>
         </div>
       </Container>
     </Section>
 
     <Section id="research">
       <Container>
-        <SectionHeading
-          eyebrow="Research"
-          title="Research and publications."
-          description="Ongoing research in applied machine learning, responsible AI, and intelligent energy systems."
-        />
-        <p class="mt-6 text-[var(--color-fg-muted)]">
-          Explore current research directions and verified publications.
-        </p>
+        <SectionHeading eyebrow="Research" title="Featured research." description="Ongoing and planned research in applied machine learning, responsible AI, and intelligent energy systems." />
+        {researchEntries.length > 0 ? (
+          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {researchEntries.map((r) => (
+              <Card variant="default" class="p-5 flex flex-col">
+                <Badge variant="accent" class="text-xs w-fit mb-3">{r.data.status}</Badge>
+                <h3 class="text-lg font-semibold text-[var(--color-fg)]">{r.data.title}</h3>
+                <p class="mt-2 text-sm text-[var(--color-fg-muted)] flex-1">{r.data.description}</p>
+                <a href={'/research/' + r.id} class="mt-4 text-sm text-[var(--color-accent)] hover:underline">Read more →</a>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <p class="mt-6 text-[var(--color-fg-muted)]">Featured research will appear here once marked <code class="mono">featured: true</code>.</p>
+        )}
         <div class="mt-6 flex flex-wrap gap-3">
-          <a href="/research" class="text-sm text-[var(--color-accent)] hover:underline font-medium">View all research</a>
-          <a href="/publications" class="text-sm text-[var(--color-accent)] hover:underline font-medium">View publications</a>
+          <Button href="/research" variant="secondary" size="md">View all research</Button>
+          <Button href="/publications" variant="ghost" size="md">Publications</Button>
         </div>
       </Container>
     </Section>
@@ -51,9 +97,7 @@ import Button from '../components/ui/Button.astro';
     <Section id="engineering">
       <Container>
         <SectionHeading eyebrow="Engineering" title="Engineering laboratory." description="Technical deep dives, system architecture, and engineering practices." />
-        <p class="mt-6 text-[var(--color-fg-muted)]">
-          Explore backend engineering, DevOps and quality, machine learning engineering, AI application architecture, and intelligent energy systems.
-        </p>
+        <p class="mt-6 text-[var(--color-fg-muted)]">Explore backend engineering, DevOps and quality, machine learning engineering, AI application architecture, and intelligent energy systems.</p>
         <div class="mt-6">
           <Button href="/engineering" variant="primary" size="md">Open engineering lab</Button>
         </div>
@@ -62,14 +106,87 @@ import Button from '../components/ui/Button.astro';
 
     <Section id="writing">
       <Container>
-        <SectionHeading eyebrow="Writing" title="Technical writing." description="Writing section coming in Phase 5." />
+        <SectionHeading eyebrow="Writing" title="Latest writing." description="Technical notes and reflections on software engineering and applied AI." />
+        {writingPosts.length > 0 ? (
+          <div class="mt-8 space-y-4">
+            {writingPosts.map((w) => (
+              <Card variant="default" class="p-5">
+                <h3 class="text-lg font-semibold text-[var(--color-fg)]">
+                  <a href={'/writing/' + w.id} class="hover:text-[var(--color-accent)]">{w.data.title}</a>
+                </h3>
+                <p class="mt-1 text-sm text-[var(--color-fg-muted)]">{w.data.description}</p>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <p class="mt-6 text-[var(--color-fg-muted)]">No published articles yet. Drafts are available in <code class="mono">src/content/writing/</code>.</p>
+        )}
+        <div class="mt-6">
+          <Button href="/writing" variant="secondary" size="md">View all writing</Button>
+        </div>
       </Container>
     </Section>
 
-    <Section id="contact">
+    <Section id="open-source">
       <Container>
-        <SectionHeading eyebrow="Contact" title="Get in touch." description="Contact section coming in Phase 8." />
+        <SectionHeading eyebrow="Open Source" title="Open source and GitHub." description="Verified public repositories and profile links. No fabricated statistics." />
+        <div class="mt-6 space-y-4">
+          {openSourceRepos.map((repo) => (
+            <Card variant="default" class="p-5">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <h3 class="font-semibold text-[var(--color-fg)]">
+                    <a href={repo.url} class="hover:text-[var(--color-accent)]" rel="noopener noreferrer" target="_blank">{repo.name}</a>
+                  </h3>
+                  <p class="mt-1 text-sm text-[var(--color-fg-muted)]">{repo.description}</p>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    {repo.technologies.map((t) => (
+                      <Badge variant="outline" class="text-xs" key={t}>{t}</Badge>
+                    ))}
+                  </div>
+                </div>
+                <Badge variant="muted" class="text-xs">{repo.status}</Badge>
+              </div>
+            </Card>
+          ))}
+        </div>
+        <p class="mt-6 text-sm text-[var(--color-fg-muted)]">
+          GitHub profile: <a href={githubProfileUrl} class="text-[var(--color-accent)] hover:underline" rel="noopener noreferrer" target="_blank">{githubProfileUrl}</a>
+        </p>
       </Container>
     </Section>
+
+    <Section id="certifications">
+      <Container>
+        <SectionHeading eyebrow="Recognition" title="Certifications and recognition." description="Verified scholarships, awards, and recognition." />
+        <div class="mt-6 space-y-4">
+          {certifications.map((c) => (
+            <Card variant="default" class="p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-semibold text-[var(--color-fg)]">{c.title}</h3>
+                  <p class="mt-1 text-sm text-[var(--color-fg-muted)]">{c.issuer}{c.year ? ' · ' + c.year : ''}</p>
+                  {c.description && <p class="mt-2 text-sm text-[var(--color-fg-muted)]">{c.description}</p>}
+                </div>
+                <Badge variant="accent" class="text-xs">{c.type}</Badge>
+              </div>
+            </Card>
+          ))}
+        </div>
+        <p class="mt-4 text-xs text-[var(--color-fg-subtle)]">
+          No certifications are listed beyond verified achievements. See CONTENT_TODO.md for items to add.
+        </p>
+      </Container>
+    </Section>
+
+    <Section id="availability">
+      <Container>
+        <SectionHeading eyebrow="Availability" title="Professional availability." />
+        <p class="mt-6 text-[var(--color-fg-muted)]">{availabilityStatement}</p>
+      </Container>
+    </Section>
+
+    <Contact />
   </main>
 </BaseLayout>
+
