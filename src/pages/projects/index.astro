@@ -6,27 +6,109 @@ import Section from '../../components/ui/Section.astro';
 import SectionHeading from '../../components/ui/SectionHeading.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const projects = await getCollection('projects');
+const projects = (await getCollection('projects')).sort((a, b) =>
+  (a.data.title ?? '').localeCompare(b.data.title ?? '')
+);
+
+const categories = Array.from(new Set(projects.map((p) => p.data.category)));
+
+const categoryLabels: Record<string, string> = {
+  'software-engineering': 'Software Engineering',
+  backend: 'Backend',
+  'full-stack': 'Full Stack',
+  'ai-ml': 'AI / ML',
+  research: 'Research',
+  'iot-cloud': 'IoT & Cloud',
+};
 ---
-<BaseLayout title="Projects">
+
+<BaseLayout title="Projects — Asiimwe Ronald" description="Software engineering, machine learning, AI, and research projects by Asiimwe Ronald.">
   <main id="main">
     <Section id="projects">
       <Container>
-        <SectionHeading eyebrow="Projects" title="Selected work." />
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <SectionHeading eyebrow="Projects" title="Selected work." description="A curated set of software engineering, machine learning, AI, and research projects. Each entry is labelled by status." />
+
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <input
+            id="project-search"
+            type="search"
+            placeholder="Search projects…"
+            class="w-full sm:max-w-xs rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-accent)] focus:outline-none"
+            aria-label="Search projects"
+          />
+          <div class="flex flex-wrap gap-2" id="project-filters">
+            <button data-filter="all" class="filter-btn is-active rounded-[var(--radius-full)] border border-[var(--color-border)] px-3 py-1 text-xs font-medium text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">All</button>
+            {categories.map((c) => (
+              <button data-filter={c} class="filter-btn rounded-[var(--radius-full)] border border-[var(--color-border)] px-3 py-1 text-xs font-medium text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">
+                {categoryLabels[c] ?? c}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div id="project-grid" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
-            <ProjectCard
-              title={project.data.title}
-              description={project.data.description}
-              category="Software"
-              status={project.data.status}
-              technologies={project.data.technologies}
-              image={project.data.image}
-              href="/projects/test"
-            />
+            <div class="project-item" data-category={project.data.category} data-title={project.data.title.toLowerCase()} data-tech={project.data.technologies.join(' ').toLowerCase()}>
+              <ProjectCard
+                title={project.data.title}
+                description={project.data.description}
+                category={categoryLabels[project.data.category] ?? project.data.category}
+                status={project.data.status}
+                technologies={project.data.technologies}
+                image={project.data.image}
+                href={'/projects/' + project.id}
+                githubUrl={project.data.githubUrl}
+                liveUrl={project.data.liveUrl}
+              />
+            </div>
           ))}
         </div>
+
+        <p id="project-empty" class="mt-8 hidden text-[var(--color-fg-muted)]">No projects match your filters.</p>
       </Container>
     </Section>
   </main>
+
+  <script is:inline>
+    (function () {
+      const search = document.getElementById('project-search');
+      const grid = document.getElementById('project-grid');
+      const empty = document.getElementById('project-empty');
+      const buttons = Array.from(document.querySelectorAll('.filter-btn'));
+      let activeFilter = 'all';
+
+      function apply() {
+        const q = (search && search.value ? search.value : '').toLowerCase().trim();
+        let visible = 0;
+        grid?.querySelectorAll('.project-item').forEach((item) => {
+          const cat = item.getAttribute('data-category');
+          const title = item.getAttribute('data-title') || '';
+          const tech = item.getAttribute('data-tech') || '';
+          const matchesFilter = activeFilter === 'all' || cat === activeFilter;
+          const matchesQuery = !q || title.includes(q) || tech.includes(q);
+          const show = matchesFilter && matchesQuery;
+          item.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        if (empty) empty.classList.toggle('hidden', visible !== 0);
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          activeFilter = btn.getAttribute('data-filter') || 'all';
+          buttons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          apply();
+        });
+      });
+      search?.addEventListener('input', apply);
+    })();
+  </script>
+  <style>
+    .filter-btn.is-active {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: var(--color-accent-soft);
+    }
+  </style>
 </BaseLayout>

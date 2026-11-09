@@ -4,13 +4,13 @@ export interface NavItem {
 }
 
 export const navigation: NavItem[] = [
-  { label: 'Home', href: '/#home' },
+  { label: 'Home', href: '/' },
   { label: 'About', href: '/#about' },
   { label: 'Experience', href: '/#experience' },
-  { label: 'Projects', href: '/#projects' },
+  { label: 'Projects', href: '/projects' },
   { label: 'Research', href: '/research' },
   { label: 'Publications', href: '/publications' },
   { label: 'Engineering', href: '/engineering' },
-  { label: 'Writing', href: '/#writing' },
+  { label: 'Writing', href: '/writing' },
   { label: 'Contact', href: '/#contact' },
 ];
